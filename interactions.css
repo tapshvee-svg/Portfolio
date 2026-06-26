@@ -1,0 +1,219 @@
+/*
+  interactions.css
+  Premium micro-interactions, hover states, and scroll animations.
+  Inspired by Apple / Linear / Vercel / Framer / Stripe design language.
+  All transforms use GPU-accelerated properties only.
+*/
+
+/* ─── Custom easing tokens ──────────────────────────────────────────────── */
+:root {
+  --ease-premium:   cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  --ease-out-quart: cubic-bezier(0.25, 1, 0.5, 1);
+  --ease-spring:    cubic-bezier(0.34, 1.4, 0.64, 1);   /* very slight overshoot */
+  --ease-magnetic:  cubic-bezier(0.23, 1, 0.32, 1);
+
+  --shadow-sm:  0 1px 3px rgba(0,0,0,0.05), 0 1px 2px rgba(0,0,0,0.04);
+  --shadow-md:  0 4px 12px rgba(0,0,0,0.07), 0 2px 4px rgba(0,0,0,0.04);
+  --shadow-lg:  0 12px 32px rgba(0,0,0,0.10), 0 4px 12px rgba(0,0,0,0.06), 0 1px 3px rgba(0,0,0,0.04);
+  --shadow-xl:  0 20px 48px rgba(0,0,0,0.12), 0 8px 20px rgba(0,0,0,0.07), 0 2px 6px rgba(0,0,0,0.04);
+}
+
+/* ─── Respect reduced motion ────────────────────────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* ─── Scroll-reveal base state ──────────────────────────────────────────── */
+.reveal {
+  opacity: 0;
+  transform: translate3d(0, 22px, 0);
+  transition: opacity 0.65s var(--ease-out-quart),
+              transform 0.65s var(--ease-out-quart);
+}
+
+.reveal.is-visible {
+  opacity: 1;
+  transform: translate3d(0, 0, 0);
+}
+
+/* Staggered children */
+.reveal-stagger > * {
+  opacity: 0;
+  transform: translate3d(0, 18px, 0);
+  transition: opacity 0.55s var(--ease-out-quart),
+              transform 0.55s var(--ease-out-quart);
+}
+.reveal-stagger.is-visible > *:nth-child(1) { transition-delay: 0.05s; }
+.reveal-stagger.is-visible > *:nth-child(2) { transition-delay: 0.12s; }
+.reveal-stagger.is-visible > *:nth-child(3) { transition-delay: 0.19s; }
+.reveal-stagger.is-visible > *:nth-child(4) { transition-delay: 0.26s; }
+.reveal-stagger.is-visible > * { opacity: 1; transform: translate3d(0,0,0); }
+
+/* ─── Divider animate from left ─────────────────────────────────────────── */
+hr.divider {
+  transform-origin: left center;
+  transform: scaleX(0);
+  opacity: 0;
+  transition: transform 0.7s var(--ease-out-quart),
+              opacity   0.4s var(--ease-premium);
+}
+hr.divider.is-visible {
+  transform: scaleX(1);
+  opacity: 1;
+}
+
+/* ─── Avatar floating + shadow ──────────────────────────────────────────── */
+.avatar {
+  animation: avatarFloat 5s var(--ease-premium) infinite;
+  box-shadow: 0 8px 30px rgba(0,0,0,0.08), 0 0 20px rgba(0,0,0,0.04);
+  transition: box-shadow 0.35s var(--ease-premium);
+  will-change: transform, box-shadow;
+}
+
+.avatar:hover {
+  box-shadow: 0 16px 40px rgba(0,0,0,0.16), 0 0 30px rgba(0,0,0,0.08);
+}
+
+@keyframes avatarFloat {
+  0%, 100% { transform: translate3d(0, 0px, 0); }
+  50%       { transform: translate3d(0, -6px, 0); }
+}
+
+.avatar img {
+  transition: transform 0.35s var(--ease-premium);
+  will-change: transform;
+}
+
+.avatar:hover img {
+  transform: scale(1.06);
+}
+
+/* ─── Buttons ────────────────────────────────────────────────────────────── */
+.btn {
+  position: relative;
+  overflow: hidden;
+  transition: transform  0.28s var(--ease-spring),
+              box-shadow 0.28s var(--ease-premium),
+              background-color 0.25s var(--ease-premium),
+              color            0.25s var(--ease-premium),
+              border-color     0.25s var(--ease-premium) !important;
+  will-change: transform;
+}
+
+.btn:hover {
+  transform: translate3d(0, -2px, 0) scale(1.025);
+  box-shadow: var(--shadow-md);
+}
+
+.btn:active {
+  transform: translate3d(0, 0px, 0) scale(0.98);
+  box-shadow: var(--shadow-sm);
+}
+
+/* Ripple element */
+.btn .ripple {
+  position: absolute;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.25);
+  transform: scale(0);
+  animation: rippleExpand 0.55s var(--ease-out-quart) forwards;
+  pointer-events: none;
+}
+
+.primary-btn .ripple { background: rgba(255,255,255,0.22); }
+.secondary-btn .ripple { background: rgba(0,0,0,0.06); }
+
+@keyframes rippleExpand {
+  to { transform: scale(4); opacity: 0; }
+}
+
+/* ─── Social links underline animation ──────────────────────────────────── */
+.social-links a {
+  position: relative;
+  text-decoration: none;
+  transition: color 0.25s var(--ease-premium);
+}
+
+.social-links a::after {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  width: 100%;
+  height: 1px;
+  background: currentColor;
+  transform: scaleX(0);
+  transform-origin: right center;
+  transition: transform 0.3s var(--ease-out-quart);
+}
+
+.social-links a:hover::after {
+  transform: scaleX(1);
+  transform-origin: left center;
+}
+
+/* ─── Video cards ────────────────────────────────────────────────────────── */
+.video-thumbnail {
+  border-radius: 8px;
+  transition: transform  0.35s var(--ease-spring),
+              box-shadow 0.35s var(--ease-premium);
+  will-change: transform;
+  transform-style: preserve-3d;
+}
+
+.video-thumbnail:hover {
+  transform: translate3d(0, -7px, 0);
+  box-shadow: var(--shadow-lg);
+}
+
+.video-placeholder iframe {
+  transition: transform 0.45s var(--ease-premium);
+  will-change: transform;
+}
+
+.video-thumbnail:hover iframe {
+  transform: scale(1.03);
+}
+
+/* ─── Testimonial cards ──────────────────────────────────────────────────── */
+.testimonial-card {
+  transition: transform  0.35s var(--ease-spring),
+              box-shadow 0.35s var(--ease-premium);
+  will-change: transform;
+  transform: translate3d(0, 0, 0);
+  border-radius: 10px;
+}
+
+.testimonial-card:hover {
+  transform: translate3d(0, -6px, 0);
+  box-shadow: var(--shadow-lg);
+}
+
+/* ─── Service list items ─────────────────────────────────────────────────── */
+.service-list li {
+  transition: padding-left 0.28s var(--ease-out-quart),
+              color        0.25s var(--ease-premium);
+  border-radius: 6px;
+}
+
+.service-list li:hover {
+  padding-left: 0.6rem;
+}
+
+/* ─── Section headings (h2) fade-slide ───────────────────────────────────── */
+h2 {
+  transition: opacity 0.5s var(--ease-out-quart),
+              transform 0.5s var(--ease-out-quart);
+}
+
+/* ─── Background parallax wrapper ───────────────────────────────────────── */
+#wireframe-bg {
+  transition: transform 0.1s linear;
+  will-change: transform;
+}
+
+

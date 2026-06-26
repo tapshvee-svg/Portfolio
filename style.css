@@ -1,0 +1,336 @@
+/* 
+  Minimal, Monospace Portfolio Theme 
+  Inspired by carrd.co aesthetics
+*/
+
+:root {
+    --bg-color: #f7f7f7;
+    --text-color: #111111;
+    --text-muted: #666666;
+    --border-color: #e0e0e0;
+    --accent-color: #000000;
+    --accent-hover: #333333;
+    
+    --font-mono: 'Space Mono', monospace;
+    
+    --container-width: 700px;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    font-family: var(--font-mono);
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+    position: relative;
+    min-height: 100vh;
+}
+
+/* Infinite 3D wireframe room background */
+.bg-grid {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: 0;          /* sit above body bg but below content */
+    pointer-events: none;
+    overflow: hidden;
+}
+
+.bg-grid canvas {
+    display: block;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+}
+
+.container {
+    max-width: var(--container-width);
+    margin: 0 auto;
+    padding: 4rem 2rem;
+    position: relative;  /* sit above the fixed bg-grid */
+    z-index: 1;
+}
+
+/* Typography */
+h1, h2, h3 {
+    font-weight: 700;
+    margin-bottom: 1rem;
+    letter-spacing: -0.5px;
+}
+
+h1 {
+    font-size: 2rem;
+    text-align: center;
+    margin-top: 1.5rem;
+}
+
+h2 {
+    font-size: 1.25rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    border-bottom: 2px solid var(--accent-color);
+    display: inline-block;
+    padding-bottom: 0.25rem;
+    margin-bottom: 2rem;
+}
+
+h3 {
+    font-size: 1rem;
+    margin-bottom: 0.25rem;
+}
+
+p {
+    margin-bottom: 1rem;
+    color: var(--text-muted);
+}
+
+.subtitle {
+    text-align: center;
+    font-size: 1.1rem;
+    max-width: 500px;
+    margin: 0 auto 2rem;
+    color: var(--text-color);
+}
+
+strong {
+    color: var(--text-color);
+}
+
+hr.divider {
+    border: 0;
+    height: 1px;
+    background-color: var(--border-color);
+    margin: 4rem 0;
+}
+
+/* Buttons & Links */
+a {
+    color: var(--accent-color);
+    text-decoration: underline;
+    text-decoration-thickness: 1px;
+    text-underline-offset: 4px;
+    transition: all 0.2s ease;
+}
+
+a:hover {
+    color: var(--text-muted);
+}
+
+.btn {
+    display: inline-block;
+    padding: 0.75rem 1.5rem;
+    text-decoration: none;
+    font-weight: 700;
+    text-transform: uppercase;
+    font-size: 0.9rem;
+    letter-spacing: 1px;
+    border-radius: 4px;
+    transition: all 0.2s ease;
+    cursor: pointer;
+}
+
+.primary-btn {
+    background-color: var(--accent-color);
+    color: white;
+    border: 2px solid var(--accent-color);
+}
+
+.primary-btn:hover {
+    background-color: transparent;
+    color: var(--accent-color);
+}
+
+.secondary-btn {
+    background-color: transparent;
+    color: var(--accent-color);
+    border: 2px solid var(--border-color);
+}
+
+.secondary-btn:hover {
+    border-color: var(--accent-color);
+}
+
+.large-btn {
+    font-size: 1.1rem;
+    padding: 1rem 2rem;
+    margin-top: 1rem;
+}
+
+/* Sections */
+section {
+    margin-bottom: 2rem;
+}
+
+/* Hero Section */
+.hero {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+
+.avatar-container {
+    margin-bottom: 1rem;
+}
+
+.avatar {
+    width: 180px;
+    height: 180px;
+    border-radius: 50%;
+    border: 2px solid var(--accent-color);
+    padding: 4px;
+    background: white;
+    overflow: hidden;
+    display: inline-block;
+}
+
+.avatar img {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    object-fit: cover;
+    object-position: center 15%;
+}
+
+.hero-links {
+    display: flex;
+    gap: 1rem;
+    margin-top: 1rem;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+/* Portfolio Section */
+.video-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 2rem;
+}
+
+.video-card {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.video-placeholder {
+    width: 100%;
+    background-color: #ebebeb;
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--text-muted);
+    font-size: 0.9rem;
+    overflow: hidden;
+    position: relative;
+}
+
+/* 9:16 aspect ratio for shorts/reels */
+.video-placeholder.vertical {
+    aspect-ratio: 9 / 16;
+}
+
+.video-info p {
+    font-size: 0.85rem;
+    margin: 0;
+}
+
+/* Services */
+.service-list {
+    list-style: none;
+}
+
+.service-list li {
+    padding: 1.5rem 0;
+    border-bottom: 1px dashed var(--border-color);
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.service-list li:last-child {
+    border-bottom: none;
+}
+
+/* Testimonials */
+.testimonial-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+}
+
+.testimonial-card {
+    background: white;
+    padding: 2rem;
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    box-shadow: 4px 4px 0px rgba(0,0,0,0.05);
+}
+
+.testimonial-card p {
+    font-style: italic;
+    color: var(--text-color);
+    margin-bottom: 1rem;
+}
+
+/* Contact */
+.contact {
+    text-align: center;
+}
+
+.social-links {
+    margin-top: 3rem;
+    display: flex;
+    justify-content: center;
+    gap: 1.5rem;
+}
+
+footer {
+    text-align: center;
+    padding: 2rem;
+    font-size: 0.8rem;
+    color: var(--text-muted);
+    border-top: 1px solid var(--border-color);
+    position: relative;  /* sit above the fixed bg-grid */
+    z-index: 1;
+}
+
+/* Animations */
+.slide-up {
+    opacity: 0;
+    transform: translateY(20px);
+    animation: slideUpFade 0.6s ease forwards;
+}
+
+@keyframes slideUpFade {
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Responsive */
+@media (max-width: 600px) {
+    .video-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .hero-links {
+        flex-direction: column;
+        width: 100%;
+    }
+    
+    .hero-links .btn {
+        width: 100%;
+    }
+}
